@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Breakout 2</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <script src="vendor/phaser.min.js"></script>
+</head>
+
+<body>
+    <script>
+        const config= {
+            width: 480,
+            height: 320,
+            backgroundColor: '#eee',
+            type: Phaser.AUTO,
+            autoCenter: true,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            },
+            scale: {
+                mode: Phaser.Scale.FIT
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 300 },
+                    debug: false
+                }                
+            }
+        };
+
+        const game = new Phaser.Game(config);
+
+        let ball;
+
+        function preload() {
+            this.load.image("ball", "img/ball.png");
+        }
+
+        function create() {
+            ball = this.add.image(50, 50, "ball");
+        }
+        function update() {
+            ball.x += 1;
+            ball.y += 1;
+        }
+
+    </script>
+</body>
+
+</html>
