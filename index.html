@@ -17,6 +17,8 @@
     <script src="vendor/phaser.min.js"></script>
     <script type="module">
 
+        const textStyle = { font: "18px Arial", fill: "#0095DD" };
+
         class Breakout extends Phaser.Scene {
             constructor() {
                 super();
@@ -24,6 +26,11 @@
                 this.bricks;
                 this.paddle;
                 this.ball;
+
+                this.scoreText;
+                this.livesText;
+                this.score = 0;
+                this.lives = 3;
             }
 
             preload() {
@@ -32,6 +39,10 @@
             }
 
             create() {
+                this.scoreText = this.add.text(5, 5, "Points: 0", textStyle);
+                this.livesText = this.add.text(game.canvas.width - 5, 5, "Lives: 3", textStyle);
+                this.livesText.setOrigin(1, 0)
+                // this.livesText.anchor.set(1, 0);
                 //  Enable world bounds, but disable the floor
                 this.physics.world.setBoundsCollision(true, true, true, false);
 
@@ -75,7 +86,8 @@
 
             hitBrick(ball, brick) {
                 brick.disableBody(true, true);
-
+                this.score += 10;
+                this.scoreText.setText(`Points: ${this.score}`);
                 if (this.bricks.countActive() === 0) {
                     this.resetLevel();
                 }
@@ -119,6 +131,8 @@
 
             update() {
                 if (this.ball.y > 600) {
+                    this.lives -= 1;
+                    this.livesText.setText(`Lives: ${this.lives}`);
                     this.resetBall();
                 }
             }
