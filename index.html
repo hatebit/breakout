@@ -54,12 +54,7 @@
                 //  Enable world bounds, but disable the floor
                 this.physics.world.setBoundsCollision(true, true, true, false);
 
-                //  Create the bricks in a 10x6 grid
-                this.bricks = this.physics.add.staticGroup({
-                    key: 'assets', frame: ['blue1', 'red1', 'green1', 'yellow1', 'silver1', 'purple1'],
-                    frameQuantity: 10,
-                    gridAlign: { width: 10, height: 6, cellWidth: 64, cellHeight: 32, x: 112, y: 100 }
-                });
+                this.bricks = this.createLevel();
 
                 // Ball setup
                 this.anims.create({
@@ -95,7 +90,6 @@
                 this.input.on('pointerup', function (pointer) {
 
                     if (this.ball.getData('onPaddle')) {
-                        console.log("Start")
                         this.ball.setVelocity(-75, -300);
                         this.ball.setData('onPaddle', false);
                     }
@@ -104,6 +98,7 @@
             }
 
             hitBrick(ball, brick) {
+                console.log("HIT BRICK");
                 brick.disableBody(true, true);
                 this.score += 10;
                 this.scoreText.setText(`Points: ${this.score}`);
@@ -118,6 +113,23 @@
                 this.ball.setData('onPaddle', true);
             }
 
+            createTestLevel() {
+                let bricks = this.physics.add.staticGroup();
+                let brick = bricks.create(32, 64, 'assets', 'blue1')
+                brick.x = 100;
+                brick.y = 100;
+                return bricks;
+            }
+
+            createLevel() {
+                //  Create the bricks in a 10x6 grid
+                this.bricks = this.physics.add.staticGroup({
+                    key: 'assets', frame: ['blue1', 'red1', 'green1', 'yellow1', 'silver1', 'purple1'],
+                    frameQuantity: 10,
+                    gridAlign: { width: 10, height: 6, cellWidth: 32, cellHeight: 32, x: 112, y: 100 }
+                });
+            }
+
             resetLevel() {
                 this.resetBall();
 
@@ -129,6 +141,7 @@
             }
 
             hitPaddle(ball, paddle) {
+                console.log("hit paddle");
                 ball.play('wobble');
                 let diff = 0;
 
