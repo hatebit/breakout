@@ -54,7 +54,7 @@
                 //  Enable world bounds, but disable the floor
                 this.physics.world.setBoundsCollision(true, true, true, false);
 
-                this.bricks = this.createLevel();
+                this.bricks = this.createTestLevel();
 
                 // Ball setup
                 this.anims.create({
@@ -63,7 +63,7 @@
                     frameRate: 3,
                     repeat: 2
                 });
-                this.ball = this.physics.add.sprite(400, 500, 'assets')
+                this.ball = this.physics.add.sprite(400, 500, 'assets', 'ball1')
                     .setCollideWorldBounds(true)
                     .setBounce(1);
                 this.ball.setData('onPaddle', true);
@@ -103,6 +103,7 @@
                 this.score += 10;
                 this.scoreText.setText(`Points: ${this.score}`);
                 if (this.bricks.countActive() === 0) {
+                    console.log("YUO IS A WINNER");
                     this.resetLevel();
                 }
             }
@@ -115,10 +116,39 @@
 
             createTestLevel() {
                 let bricks = this.physics.add.staticGroup();
-                let brick = bricks.create(32, 64, 'assets', 'blue1')
-                brick.x = 100;
-                brick.y = 100;
+                /*for (let x = 0; x < 1; x++) {
+                    // this.createTestBrick(bricks, 32, 32, 16, 16, 'can1');
+                    this.createTestBrick2(bricks, 1, 0, 0);
+                    //this.createTestBrick(bricks, 64, 32, 32, 16+32, 'can2');
+                    this.createTestBrick2(bricks, 2, 0, 1);
+                    //this.createTestBrick(bricks, 96, 32, 32+16, 16+64, 'can3');
+                    this.createTestBrick2(bricks, 3, 0, 2);
+                }*/
+                this.createCanada(bricks);
                 return bricks;
+            }
+            createCanada(bricks) {
+                this.createTestBrick2(bricks, 3, 0, 0);
+                this.createTestBrick2(bricks, 3, 3, 0);
+                this.createTestBrick2(bricks, 3, 6, 0);
+                this.createTestBrick2(bricks, 3, 9, 0);
+                this.createTestBrick2(bricks, 3, 12, 0);
+                this.createTestBrick2(bricks, 1, 15, 0);
+                this.createTestBrick2(bricks, 1, 20, 0);
+                this.createTestBrick2(bricks, 3, 21, 0);
+                this.createTestBrick2(bricks, 1, 24, 0);
+            }
+            createTestBrick2(bricks, size, x, y) {
+                this.createTestBrick(bricks, 
+                    32*size, 32, // w, h
+                    (32*size/2)+x*32, 16+y*32, // x, y
+                    'can'+size);
+            }
+            createTestBrick(bricks, w, h, x, y, kind) {
+                let brick = bricks.create(h, w, 'assets', kind);
+                brick.x = x;
+                brick.y = y;
+                brick.refreshBody();
             }
 
             createLevel() {
@@ -183,7 +213,10 @@
             scene: [Breakout],
             autoCenter: true,
             physics: {
-                default: 'arcade'
+                default: 'arcade',
+                arcade: {
+                    debug: true
+                }
             },
             scale: {
                 mode: Phaser.Scale.FIT
