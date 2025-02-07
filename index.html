@@ -128,21 +128,74 @@
                 return bricks;
             }
             createCanada(bricks) {
-                this.createTestBrick2(bricks, 3, 0, 0);
-                this.createTestBrick2(bricks, 3, 3, 0);
-                this.createTestBrick2(bricks, 3, 6, 0);
-                this.createTestBrick2(bricks, 3, 9, 0);
-                this.createTestBrick2(bricks, 3, 12, 0);
-                this.createTestBrick2(bricks, 1, 15, 0);
-                this.createTestBrick2(bricks, 1, 20, 0);
-                this.createTestBrick2(bricks, 3, 21, 0);
-                this.createTestBrick2(bricks, 1, 24, 0);
+                // line one
+                this.red(bricks, 3, 0, 0);
+                this.red(bricks, 3, 3, 0);
+                this.red(bricks, 3, 6, 0);
+                this.white(bricks, 3, 9, 0);
+                this.white(bricks, 3, 12, 0);
+                this.white(bricks, 1, 15, 0);
+                this.red(bricks, 1, 20, 0);
+                this.red(bricks, 3, 21, 0);
+                this.red(bricks, 1, 24, 0);
+                // line two
+                this.red(bricks, 2, 1, 1);
+                this.red(bricks, 3, 3, 1);
+                this.red(bricks, 3, 6, 1);
+                this.white(bricks, 3, 9, 1);
+                this.white(bricks, 3, 12, 1);
+                this.white(bricks, 3, 15, 1);
+                this.red(bricks, 2, 19, 1);
+                this.red(bricks, 3, 21, 1);
+                this.red(bricks, 3, 24, 1);
+                // line three
+                this.red(bricks, 2, 1, 2);
+                this.red(bricks, 3, 3, 2);
+                this.red(bricks, 3, 6, 2);
+                this.white(bricks, 3, 9, 2);
+                this.white(bricks, 3, 12, 2);
+                this.white(bricks, 3, 15, 2);
+                this.red(bricks, 3, 18, 2);
+                this.red(bricks, 3, 21, 2);
+                this.red(bricks, 3, 24, 2);
+                // line four
+                this.red(bricks, 3, 3, 3);
+                this.red(bricks, 3, 6, 3);
+                this.white(bricks, 3, 9, 3);
+                this.white(bricks, 3, 12, 3);
+                this.white(bricks, 3, 15, 3);
+                this.red(bricks, 3, 18, 3);
+                this.red(bricks, 3, 21, 3);
+                this.red(bricks, 3, 24, 3);
+                // line five
+                this.red(bricks, 1, 4, 4);
+                this.white(bricks, 3, 15, 4);
+                this.red(bricks, 3, 18, 4);
+                this.red(bricks, 3, 21, 4);
+                this.red(bricks, 1, 24, 4);
+                this.red(bricks, 2, 26, 4);
+                // line six
+                this.red(bricks, 3, 18, 5);
+                this.red(bricks, 1, 21, 5);
+                this.red(bricks, 3, 23, 5);
+                this.red(bricks, 1, 27, 5);
+                // line seven
+                this.red(bricks, 2, 18, 6);
+                this.red(bricks, 2, 23, 6);
+                // line eight
+                this.red(bricks, 1, 18, 7);
             }
-            createTestBrick2(bricks, size, x, y) {
+            white(bricks, size, x, y) {
+                this.createTestBrick(bricks,
+                    24*size, 24, // w, h
+                    (24*size/2)+x*24, 12+y*24, // x, y
+                    'white'+size);
+            }
+            red(bricks, size, x, y) {
                 this.createTestBrick(bricks, 
-                    32*size, 32, // w, h
-                    (32*size/2)+x*32, 16+y*32, // x, y
-                    'can'+size);
+                    24*size, 24, // w, h
+                    (24*size/2)+x*24, 12+y*24, // x, y
+                    'red'+size);
             }
             createTestBrick(bricks, w, h, x, y, kind) {
                 let brick = bricks.create(h, w, 'assets', kind);
@@ -215,7 +268,7 @@
             physics: {
                 default: 'arcade',
                 arcade: {
-                    debug: true
+                    debug: false
                 }
             },
             scale: {
